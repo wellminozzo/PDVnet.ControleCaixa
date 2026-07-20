@@ -7,4 +7,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PDVnet.ControleCaixa.Data\PDVnet.ControleCaixa.Data.csproj" />
+    <ProjectReference Include="..\PDVnet.ControleCaixa.Model\PDVnet.ControleCaixa.Model.csproj" />
+  </ItemGroup>
+
 </Project>

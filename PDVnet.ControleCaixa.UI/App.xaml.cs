@@ -9,7 +9,5 @@ namespace PDVnet.ControleCaixa.UI;
 /// </summary>
 public partial class App : Application
 {
-    services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        configuration.GetConnectionString("DefaultConnection")));
+
 }

@@ -9,7 +9,7 @@
     Width="851"
     Height="526"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Background="#A9ABAD">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
@@ -30,13 +30,13 @@
             <Button
                 Height="40"
                 Margin="5"
-                Command="{Binding ShowUsuariosCommand}"
+                Command="{Binding ShowTransacoesCommand}"
                 Content="Transações" />
 
             <Button
                 Height="40"
                 Margin="5"
-                Command="{Binding ShowConfiguracoesCommand}"
+                Command="{Binding ShowFluxoDeCaixaCommand}"
                 Content="Fluxo de Caixa" />
         </StackPanel>
 

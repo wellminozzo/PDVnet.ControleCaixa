@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\Dashboard\**" />
+    <EmbeddedResource Remove="ViewModels\Dashboard\**" />
+    <None Remove="ViewModels\Dashboard\**" />
+    <Page Remove="ViewModels\Dashboard\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
 
@@ -19,10 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Dashboard\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />

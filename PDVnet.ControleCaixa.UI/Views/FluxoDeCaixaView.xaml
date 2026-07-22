@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="PDVnet.ControleCaixa.UI.Views.DashView"
+    x:Class="PDVnet.ControleCaixa.UI.Views.FluxoDeCaixaView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,8 +8,9 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid Background="Beige">
+    <Grid>
 
-        <TextBlock Background="AliceBlue" Text="aa" />
+        <TextBlock Background="red" Text="Fluxo de Caixa" />
+
     </Grid>
 </UserControl>

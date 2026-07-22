@@ -1,5 +1,4 @@
-﻿using PDVnet.ControleCaixa.Model.Caixa;
-using System.Collections.ObjectModel;
+﻿using PDVnet.ControleCaixa.UI.Commands;
 using System.Windows.Input;
 
 namespace PDVnet.ControleCaixa.UI.ViewModels;

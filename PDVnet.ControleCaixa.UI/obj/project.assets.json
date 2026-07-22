@@ -38,6 +38,22 @@
           }
         }
       },
+      "CommunityToolkit.Mvvm/8.3.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/CommunityToolkit.Mvvm.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/CommunityToolkit.Mvvm.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "build": {
+          "buildTransitive/CommunityToolkit.Mvvm.targets": {}
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
         "type": "package",
         "compile": {
@@ -1131,6 +1147,47 @@
         "lib/net8.0/Azure.Identity.xml",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "CommunityToolkit.Mvvm/8.3.2": {
+      "sha512": "m8EolE1A0Updj68WTsZSGI6VWb6mUqHPh7QFo0kt7+JPhYMNXRS1ch8TS/oITAdcxTLrwMOp3ku1KjeG1/Zdpg==",
+      "type": "package",
+      "path": "communitytoolkit.mvvm/8.3.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "License.md",
+        "ThirdPartyNotices.txt",
+        "analyzers/dotnet/roslyn4.0/cs/CommunityToolkit.Mvvm.CodeFixers.dll",
+        "analyzers/dotnet/roslyn4.0/cs/CommunityToolkit.Mvvm.SourceGenerators.dll",
+        "analyzers/dotnet/roslyn4.3/cs/CommunityToolkit.Mvvm.CodeFixers.dll",
+        "analyzers/dotnet/roslyn4.3/cs/CommunityToolkit.Mvvm.SourceGenerators.dll",
+        "build/CommunityToolkit.Mvvm.FeatureSwitches.targets",
+        "build/CommunityToolkit.Mvvm.SourceGenerators.targets",
+        "build/CommunityToolkit.Mvvm.WindowsSdk.targets",
+        "build/CommunityToolkit.Mvvm.targets",
+        "buildTransitive/CommunityToolkit.Mvvm.FeatureSwitches.targets",
+        "buildTransitive/CommunityToolkit.Mvvm.SourceGenerators.targets",
+        "buildTransitive/CommunityToolkit.Mvvm.WindowsSdk.targets",
+        "buildTransitive/CommunityToolkit.Mvvm.targets",
+        "communitytoolkit.mvvm.8.3.2.nupkg.sha512",
+        "communitytoolkit.mvvm.nuspec",
+        "lib/net6.0/CommunityToolkit.Mvvm.dll",
+        "lib/net6.0/CommunityToolkit.Mvvm.pdb",
+        "lib/net6.0/CommunityToolkit.Mvvm.xml",
+        "lib/net8.0-windows10.0.17763/CommunityToolkit.Mvvm.dll",
+        "lib/net8.0-windows10.0.17763/CommunityToolkit.Mvvm.pdb",
+        "lib/net8.0-windows10.0.17763/CommunityToolkit.Mvvm.xml",
+        "lib/net8.0/CommunityToolkit.Mvvm.dll",
+        "lib/net8.0/CommunityToolkit.Mvvm.pdb",
+        "lib/net8.0/CommunityToolkit.Mvvm.xml",
+        "lib/netstandard2.0/CommunityToolkit.Mvvm.dll",
+        "lib/netstandard2.0/CommunityToolkit.Mvvm.pdb",
+        "lib/netstandard2.0/CommunityToolkit.Mvvm.xml",
+        "lib/netstandard2.1/CommunityToolkit.Mvvm.dll",
+        "lib/netstandard2.1/CommunityToolkit.Mvvm.pdb",
+        "lib/netstandard2.1/CommunityToolkit.Mvvm.xml"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
@@ -2559,6 +2616,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0-windows": [
+      "CommunityToolkit.Mvvm >= 8.3.2",
       "Microsoft.Extensions.Configuration >= 10.0.10",
       "Microsoft.Extensions.Configuration.Json >= 10.0.10",
       "Microsoft.Extensions.DependencyInjection >= 10.0.10",
@@ -2569,23 +2627,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gg\\.nuget\\packages\\": {},
+    "C:\\Users\\w\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
+      "projectUniqueName": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
       "projectName": "PDVnet.ControleCaixa.UI",
-      "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
-      "packagesPath": "C:\\Users\\gg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\obj\\",
+      "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
+      "packagesPath": "C:\\Users\\w\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\gg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\w\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2602,14 +2660,14 @@
           "framework": "net10.0-windows7.0",
           "targetAlias": "net10.0-windows",
           "projectReferences": {
-            "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj": {
-              "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj"
+            "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj": {
+              "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj"
             },
-            "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj": {
-              "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj"
+            "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj": {
+              "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj"
             },
-            "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj": {
-              "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj"
+            "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj": {
+              "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj"
             }
           }
         }
@@ -2631,6 +2689,10 @@
         "framework": "net10.0-windows7.0",
         "targetAlias": "net10.0-windows",
         "dependencies": {
+          "CommunityToolkit.Mvvm": {
+            "target": "Package",
+            "version": "[8.3.2, )"
+          },
           "Microsoft.Extensions.Configuration": {
             "target": "Package",
             "version": "[10.0.10, )"
@@ -2667,7 +2729,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300-preview.0.26177.108/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

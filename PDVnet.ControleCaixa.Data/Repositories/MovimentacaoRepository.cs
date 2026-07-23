@@ -1,4 +1,5 @@
-﻿using PDVnet.ControleCaixa.Data.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using PDVnet.ControleCaixa.Data.Contexts;
 using PDVnet.ControleCaixa.Model.Caixa;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ public class MovimentacaoRepository
         _context = context;
     }
 
+    public async Task<List<MovimentacaoCaixa>> GetAllAsync()
+    {
+        return await _context.MovimentacaoCaixa.ToListAsync();
+    }
+
     public async Task<MovimentacaoCaixa?> GetByIdAsync(int id)
     {
         return await _context.MovimentacaoCaixa.FindAsync(id);
@@ -22,7 +28,7 @@ public class MovimentacaoRepository
 
     public async Task AddAsync(MovimentacaoCaixa movimentacao)
     {
-        await _context.MovimentacaoCaixa.AddAsync(movimentacao);
+        _context.MovimentacaoCaixa.Add(movimentacao);
         await _context.SaveChangesAsync();
     }
 
@@ -32,10 +38,14 @@ public class MovimentacaoRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(MovimentacaoCaixa movimentacao)
+    public async Task DeleteAsync(int id)
     {
-        _context.MovimentacaoCaixa.Remove(movimentacao);
-        await _context.SaveChangesAsync();
+        var movimentacao = await _context.MovimentacaoCaixa.FindAsync(id);
+        if (movimentacao != null)
+        {
+            _context.MovimentacaoCaixa.Remove(movimentacao);
+            await _context.SaveChangesAsync();
+        }
     }
 
 }

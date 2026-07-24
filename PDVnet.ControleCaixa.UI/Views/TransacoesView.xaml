@@ -4,74 +4,130 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
+    xmlns:converters="clr-namespace:PDVnet.ControleCaixa.UI.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    d:DesignHeight="600"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid Background="#A9ABAD">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/TransacoesStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
+    <Grid Background="#F5F7FA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Header -->
+        <Border Style="{StaticResource HeaderPanelStyle}">
+            <StackPanel>
+                <TextBlock Text="REGISTRAR ATIVIDADE"
+                           FontSize="11" FontWeight="SemiBold"
+                           Foreground="#6EE7B7" Margin="0,0,0,4"/>
+                <TextBlock Text="Gestão de Fluxo"
+                           FontSize="24" FontWeight="Bold"
+                           Foreground="White"/>
+            </StackPanel>
+        </Border>
 
+        <!-- Form Card -->
+        <Border Grid.Row="1" Style="{StaticResource CardPanelStyle}" Margin="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
+                <!-- Linha 1: Tipo e Valor -->
+                <Grid Grid.Row="0" Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-        <Grid
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="10,10,10,298">
-            <Border
-                Background="#064E3B"
-                BorderBrush="{x:Null}"
-                BorderThickness="0"
-                CornerRadius="10" />
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Tipo de Lançamento" Style="{StaticResource LabelStyle}"/>
+                        <UniformGrid Columns="2" Height="40">
+                            <RadioButton Content="Entrada" GroupName="Tipo"
+                         IsChecked="{Binding Tipo, 
+                                     Converter={StaticResource IntToBoolConverter}, 
+                                     ConverterParameter=0, 
+                                     Mode=TwoWay}"/>
+                            <RadioButton Content="Saída" GroupName="Tipo"
+                         IsChecked="{Binding Tipo, 
+                                     Converter={StaticResource IntToBoolConverter}, 
+                                     ConverterParameter=1, 
+                                     Mode=TwoWay}"
+                         Margin="-4,0,0,0"/>
+                        </UniformGrid>
+                    </StackPanel>
 
-            <TextBox
-                Width="129"
-                Margin="36,71,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Background="{x:Null}"
-                BorderBrush="{x:Null}"
-                FontSize="15"
-                Foreground="#7AB89F"
-                Text="Registrar Atividade"
-                TextChanged="TextBox_TextChanged" />
-            <Label
-                Margin="31,89,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Gestão de Fluxo"
-                FontSize="25"
-                Foreground="#7AB89F" />
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Valor" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Style="{StaticResource CustomTextBox}"
+                                 Text="{Binding Valor, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Grid>
 
+                <!-- Linha 2: Data e Categoria -->
+                <Grid Grid.Row="1" Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-        </Grid>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Data do Lançamento" Style="{StaticResource LabelStyle}"/>
+                        <DatePicker Style="{StaticResource CustomDatePicker}"
+                                    SelectedDateFormat="Short"
+                                    SelectedDate="{Binding DataMovimento, Mode=TwoWay}"/>
+                    </StackPanel>
 
-        <Grid
-            Grid.ColumnSpan="2"
-            Margin="10,170,10,10"
-            Background="white">
-            <Button
-                Width="100"
-                Margin="72,35,608,201"
-                Content="Entrada"
-                IsEnabled="False" />
-            <Button
-                Width="100"
-                Margin="177,35,503,201"
-                Content="Saida"
-                IsEnabled="False" />
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Categoria" Style="{StaticResource LabelStyle}"/>
+                        <ComboBox Style="{StaticResource CustomComboBox}"
+                                  ItemsSource="{Binding Categorias}"
+                                  SelectedItem="{Binding CategoriaSelecionada, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
 
+                <!-- Linha 3: Descrição -->
+                <StackPanel Grid.Row="2" Margin="0,0,0,24">
+                    <TextBlock Text="Descrição / Observações" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Style="{StaticResource CustomTextBox}"
+                             Text="{Binding Descricao, UpdateSourceTrigger=PropertyChanged}"
+                             Height="80"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalContentAlignment="Top"
+                             Padding="12,10"/>
+                </StackPanel>
 
+                <!-- Linha 4: Botões -->
+                <StackPanel Grid.Row="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Limpar"
+                            Command="{Binding LimparCommand}"
+                            Style="{StaticResource CancelButton}"
+                            Margin="0,0,12,0"/>
+                    <Button Content="Salvar Lançamento"
+                            Command="{Binding SalvarCommand}"
+                            Style="{StaticResource SaveButton}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-        </Grid>
-
-
-
-
+       
     </Grid>
 </UserControl>

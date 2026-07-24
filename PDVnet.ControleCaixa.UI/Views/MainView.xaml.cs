@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using PDVnet.ControleCaixa.Business.Services;
+using PDVnet.ControleCaixa.UI.ViewModels;
+using System.Windows;
 
 namespace PDVnet.ControleCaixa.UI.Views
 {
@@ -7,11 +9,10 @@ namespace PDVnet.ControleCaixa.UI.Views
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(MainViewModel viewModel)
         {
             InitializeComponent();
-
-            DataContext = new ViewModels.MainViewModel();
+            DataContext = viewModel;
         }
     }
 }

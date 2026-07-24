@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PDVnet.ControleCaixa.Model.Caixa;
@@ -8,6 +9,7 @@ namespace PDVnet.ControleCaixa.Model.Caixa;
 public class MovimentacaoCaixa
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required(ErrorMessage = "A descrição é obrigatória")]

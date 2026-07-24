@@ -1046,6 +1046,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "10.0.10",
           "PDVnet.ControleCaixa.Data": "1.0.0",
           "PDVnet.ControleCaixa.Model": "1.0.0"
         },
@@ -1065,6 +1066,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "10.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "10.0.10",
+          "Microsoft.Extensions.DependencyInjection": "10.0.10",
           "PDVnet.ControleCaixa.Model": "1.0.0"
         },
         "compile": {
@@ -1080,6 +1082,9 @@
       "PDVnet.ControleCaixa.Model/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "10.0.10"
+        },
         "compile": {
           "bin/placeholder/PDVnet.ControleCaixa.Model.dll": {}
         },
@@ -2569,23 +2574,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\w\\.nuget\\packages\\": {},
+    "C:\\Users\\gg\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
+      "projectUniqueName": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
       "projectName": "PDVnet.ControleCaixa.UI",
-      "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
-      "packagesPath": "C:\\Users\\w\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\obj\\",
+      "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\PDVnet.ControleCaixa.UI.csproj",
+      "packagesPath": "C:\\Users\\gg\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\w\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\gg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2602,14 +2607,14 @@
           "framework": "net10.0-windows7.0",
           "targetAlias": "net10.0-windows",
           "projectReferences": {
-            "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj": {
-              "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj"
+            "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj": {
+              "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Business\\PDVnet.ControleCaixa.Business.csproj"
             },
-            "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj": {
-              "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj"
+            "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj": {
+              "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Data\\PDVnet.ControleCaixa.Data.csproj"
             },
-            "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj": {
-              "projectPath": "C:\\Users\\w\\source\\repos\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj"
+            "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj": {
+              "projectPath": "C:\\Users\\gg\\source\\repos\\wellminozzo\\PDVnet.ControleCaixa\\PDVnet.ControleCaixa.Model\\PDVnet.ControleCaixa.Model.csproj"
             }
           }
         }
@@ -2624,7 +2629,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "10.0.400"
     },
     "frameworks": {
       "net10.0-windows": {
@@ -2667,7 +2672,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400-preview.0.26322.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using PDVnet.ControleCaixa.UI.ViewModels;
+using System.Windows.Controls;
 
 namespace PDVnet.ControleCaixa.UI.Views;
 
@@ -10,6 +11,7 @@ public partial class TransacoesView : UserControl
     public TransacoesView()
     {
         InitializeComponent();
+       
     }
 
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

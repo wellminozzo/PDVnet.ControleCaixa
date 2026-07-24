@@ -15,11 +15,12 @@ namespace PDVnet.ControleCaixa.Data.Migrations
                 name: "MovimentacaoCaixa",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Valor = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataMovimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false)
                 },

@@ -1,23 +1,34 @@
 ﻿using System.Windows.Input;
 
-namespace PDVnet.ControleCaixa.UI.Commands
+namespace PDVnet.ControleCaixa.UI.Commands;
+
+public class RelayCommand : ICommand
 {
-    public class RelayCommand : ICommand
+
+    private Action<object> execute;
+    private Func<object, bool> canExecute;
+    private readonly Action<object> _execute;
+
+    public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
     {
-        private readonly Action<object> _execute;
+        this.execute = execute;
+        this.canExecute = canExecute;
 
-        public RelayCommand(Action<object> execute)
-        {
-            _execute = execute;
-        }
+    }
 
-        public bool CanExecute(object parameter) => true;
+    public bool CanExecute(object parameter)
+    {
+        return canExecute == null || canExecute(parameter);
+    }
 
-        public void Execute(object parameter)
-        {
-            _execute(parameter);
-        }
+    public void Execute(object parameter)
+    {
+        execute(parameter);
+    }
 
-        public event EventHandler CanExecuteChanged;
+    public event EventHandler? CanExecuteChanged
+    {
+        add { CommandManager.RequerySuggested += value;  }
+        remove { CommandManager.RequerySuggested -= value; }
     }
 }

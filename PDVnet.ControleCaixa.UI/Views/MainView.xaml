@@ -6,15 +6,16 @@
     xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainView"
-    Width="851"
-    Height="526"
+    Width="800"
+    Height="600"
+    DataContext="{Binding CurrentView}"
     mc:Ignorable="d">
     <Grid Background="#A9ABAD">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
+        <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
         <!--  Sidebar  -->
         <StackPanel
             Grid.Column="0"

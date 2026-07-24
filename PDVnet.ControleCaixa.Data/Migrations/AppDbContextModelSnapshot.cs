@@ -24,9 +24,11 @@ namespace PDVnet.ControleCaixa.Data.Migrations
 
             modelBuilder.Entity("PDVnet.ControleCaixa.Model.Caixa.MovimentacaoCaixa", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Categoria")
                         .IsRequired()
@@ -37,7 +39,8 @@ namespace PDVnet.ControleCaixa.Data.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -45,8 +48,8 @@ namespace PDVnet.ControleCaixa.Data.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
 
-                    b.Property<int>("Valor")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

@@ -4,21 +4,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI"
     xmlns:views="clr-namespace:PDVnet.ControleCaixa.UI.Views"
+    xmlns:converters="clr-namespace:PDVnet.ControleCaixa.UI.Converters"
     xmlns:vm="clr-namespace:PDVnet.ControleCaixa.UI.ViewModels"
-    StartupUri="Views/MainView.xaml">
+    Startup="Application_Startup">
     <Application.Resources>
+        <ResourceDictionary>
 
-        <DataTemplate DataType="{x:Type vm:DashBoardViewModel}">
-            <views:DashView />
-        </DataTemplate>
+            <converters:IntToBooleanConverter x:Key="IntToBoolConverter"/>
 
-        <DataTemplate DataType="{x:Type vm:FluxoDeCaixaViewModel}">
-            <views:FluxoDeCaixaView />
-        </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:DashBoardViewModel}">
+                <views:DashView />
+            </DataTemplate>
 
-        <DataTemplate DataType="{x:Type vm:TransacoesViewModel}">
-            <views:TransacoesView />
-        </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:FluxoDeCaixaViewModel}">
+                <views:FluxoDeCaixaView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:TransacoesViewModel}">
+                <views:TransacoesView />
+            </DataTemplate>
+
+
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/TransacoesStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+       
 
     </Application.Resources>
 </Application>

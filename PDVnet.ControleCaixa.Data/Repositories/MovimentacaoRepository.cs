@@ -63,7 +63,7 @@ public class MovimentacaoRepository
 
         return await _context.MovimentacaoCaixa
             .Where(x =>
-                x.Tipo == 1 &&
+                x.Tipo == 0 &&
                 x.DataMovimento.Date == hoje)
             .SumAsync(x => (decimal?)x.Valor) ?? 0;
     }
@@ -74,7 +74,7 @@ public class MovimentacaoRepository
 
         return await _context.MovimentacaoCaixa
             .Where(x =>
-                x.Tipo == 2 &&
+                x.Tipo == 1 &&
                 x.DataMovimento.Date == hoje)
             .SumAsync(x => (decimal?)x.Valor) ?? 0;
     }
@@ -83,7 +83,7 @@ public class MovimentacaoRepository
     {
         return await _context.MovimentacaoCaixa
             .AsNoTracking()
-            .SumAsync(x => x.Tipo == 1
+            .SumAsync(x => x.Tipo == 0
                 ? x.Valor
                 : -x.Valor);
     }

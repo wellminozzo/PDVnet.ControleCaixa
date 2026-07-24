@@ -52,27 +52,42 @@ public class MovimentacaoRepository
     public async Task<List<MovimentacaoCaixa>> ObterUltimasMovimentacoesAsync(int quantidade = 5)
     {
         return await _context.MovimentacaoCaixa
-     .Where(x => x.Status)
-     .OrderByDescending(x => x.DataMovimento)
-     .Take(quantidade)
-     .ToListAsync();
+            .OrderByDescending(x => x.DataMovimento)
+            .Take(quantidade)
+            .ToListAsync();
     }
 
-    //public async Task<List<MovimentacaoCaixa>> ObterAsync(
-    //Expression<Func<MovimentacaoCaixa, bool>>? filtro = null,
-    //int? take = null)
-    //{
-    //    IQueryable<MovimentacaoCaixa> query = _context.MovimentacaoCaixa;
+    public async Task<decimal> ObterTotalEntradasHojeAsync()
+    {
+        var hoje = DateTime.Today;
 
-    //    if (filtro != null)
-    //        query = query.Where(filtro);
+        return await _context.MovimentacaoCaixa
+            .Where(x =>
+                x.Tipo == 1 &&
+                x.DataMovimento.Date == hoje)
+            .SumAsync(x => (decimal?)x.Valor) ?? 0;
+    }
 
-    //    query = query.OrderByDescending(x => x.DataMovimento);
+    public async Task<decimal> ObterTotalSaidasHojeAsync()
+    {
+        var hoje = DateTime.Today;
 
-    //    if (take.HasValue)
-    //        query = query.Take(take.Value);
+        return await _context.MovimentacaoCaixa
+            .Where(x =>
+                x.Tipo == 2 &&
+                x.DataMovimento.Date == hoje)
+            .SumAsync(x => (decimal?)x.Valor) ?? 0;
+    }
 
-    //    return await query.ToListAsync();
-    //}
+    public async Task<decimal> ObterSaldoTotalAsync()
+    {
+        return await _context.MovimentacaoCaixa
+            .AsNoTracking()
+            .SumAsync(x => x.Tipo == 1
+                ? x.Valor
+                : -x.Valor);
+    }
+
+
 
 }

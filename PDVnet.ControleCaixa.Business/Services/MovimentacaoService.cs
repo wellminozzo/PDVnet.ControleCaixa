@@ -39,5 +39,20 @@ public class MovimentacaoService
     {
         return await _repository.ObterUltimasMovimentacoesAsync(5);
     }
-    
+
+    public async Task<decimal> ObterTotalEntradasHojeAsync()
+    {
+        return await _repository.ObterTotalEntradasHojeAsync();
+    }
+
+    public async Task<decimal> ObterTotalSaidasHojeAsync()
+    {
+        return await _repository.ObterTotalSaidasHojeAsync();
+    }
+
+    public async Task<decimal> ObterSaldoTotalAsync()
+    {
+        return await _repository.ObterSaldoTotalAsync();
+    }
+
 }

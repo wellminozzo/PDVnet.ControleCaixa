@@ -26,95 +26,66 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Saldo Total  -->
-                <Border Margin="0,0,12,0" Style="{StaticResource CardStyle}">
+                <!--  SALDO TOTAL  -->
+                <Border
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    Style="{StaticResource CardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Style="{StaticResource CardLabelStyle}"
-                            Text="SALDO TOTAL" />
-                        <Border
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Style="{StaticResource IconContainerStyle}">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontFamily="Segoe MDL2 Assets"
-                                Foreground="{StaticResource TextSecondaryBrush}"
-                                Text="&#xE8C9;" />
+                        <TextBlock Style="{StaticResource CardLabelStyle}" Text="SALDO TOTAL" />
+
+                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C9;" />
                         </Border>
 
                         <TextBlock
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            Margin="0,8,0,4"
+                            Margin="0,12,0,8"
                             Style="{StaticResource ValueLargeStyle}"
                             Text="{Binding SaldoTotal, StringFormat='R$ {0:N2}'}" />
 
-                        <StackPanel
+                        <TextBlock
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
-                            Orientation="Horizontal">
-                            <TextBlock
-                                Margin="0,0,4,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="10"
-                                Foreground="{StaticResource SuccessBrush}"
-                                Text="&#xE70E;" />
-                            <TextBlock
-                                FontSize="11"
-                                FontWeight="SemiBold"
-                                Foreground="{StaticResource SuccessBrush}"
-                                Text="{Binding SaldoVariacao, StringFormat='{}{0:F1}%'}" />
-                            <TextBlock
-                                Margin="4,0,0,0"
-                                FontSize="11"
-                                Foreground="{StaticResource TextSecondaryBrush}"
-                                Text=" vs last month" />
-                        </StackPanel>
+                            FontSize="11"
+                            Foreground="{StaticResource TextSecondaryBrush}"
+                            Text="Saldo atual em caixa" />
                     </Grid>
                 </Border>
 
-                <!--  Entradas Hoje  -->
+                <!--  ENTRADAS HOJE  -->
                 <Border
                     Grid.Column="1"
-                    Margin="6,0,6,0"
+                    Margin="6,0"
                     Style="{StaticResource CardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Style="{StaticResource CardLabelStyle}"
-                            Text="ENTRADAS HOJE" />
-                        <Border
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Style="{StaticResource IconContainerStyle}">
+                        <TextBlock Style="{StaticResource CardLabelStyle}" Text="ENTRADAS HOJE" />
+
+                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
                             <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
                                 FontFamily="Segoe MDL2 Assets"
                                 Foreground="{StaticResource SuccessBrush}"
                                 Text="&#xE74B;" />
@@ -123,7 +94,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            Margin="0,8,0,4"
+                            Margin="0,12,0,8"
                             Style="{StaticResource ValuePositiveStyle}"
                             Text="{Binding EntradasHoje, StringFormat='R$ {0:N2}'}" />
 
@@ -132,11 +103,11 @@
                             Grid.ColumnSpan="2"
                             FontSize="11"
                             Foreground="{StaticResource TextSecondaryBrush}"
-                            Text="{Binding EntradasTransacoes, StringFormat='{}{0} new transactions'}" />
+                            Text="Entradas registradas hoje" />
                     </Grid>
                 </Border>
 
-                <!--  Saídas Hoje  -->
+                <!--  SAÍDAS HOJE  -->
                 <Border
                     Grid.Column="2"
                     Margin="12,0,0,0"
@@ -144,26 +115,19 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Style="{StaticResource CardLabelStyle}"
-                            Text="SAÍDAS HOJE" />
-                        <Border
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Style="{StaticResource IconContainerStyle}">
+                        <TextBlock Style="{StaticResource CardLabelStyle}" Text="SAÍDAS HOJE" />
+
+                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
                             <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
                                 FontFamily="Segoe MDL2 Assets"
                                 Foreground="{StaticResource DangerBrush}"
                                 Text="&#xE74A;" />
@@ -172,31 +136,16 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            Margin="0,8,0,4"
+                            Margin="0,12,0,8"
                             Style="{StaticResource ValueNegativeStyle}"
                             Text="{Binding SaidasHoje, StringFormat='R$ {0:N2}'}" />
 
-                        <StackPanel
+                        <TextBlock
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
-                            Orientation="Horizontal">
-                            <TextBlock
-                                Margin="0,0,4,0"
-                                FontFamily="Segoe MDL2 Assets"
-                                FontSize="10"
-                                Foreground="{StaticResource DangerBrush}"
-                                Text="&#xE70D;" />
-                            <TextBlock
-                                FontSize="11"
-                                FontWeight="SemiBold"
-                                Foreground="{StaticResource DangerBrush}"
-                                Text="{Binding SaidasPercentualLimite, StringFormat='{}{0}%'}" />
-                            <TextBlock
-                                Margin="4,0,0,0"
-                                FontSize="11"
-                                Foreground="{StaticResource TextSecondaryBrush}"
-                                Text=" above daily limit" />
-                        </StackPanel>
+                            FontSize="11"
+                            Foreground="{StaticResource TextSecondaryBrush}"
+                            Text="Saídas registradas hoje" />
                     </Grid>
                 </Border>
             </Grid>
@@ -331,29 +280,36 @@
 
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                                    <Border
+                                        Padding="0,8"
+                                        BorderBrush="#E0E0E0"
+                                        BorderThickness="0,0,0,1">
 
-                                        <StackPanel Grid.Column="0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock
+                                                    FontSize="13"
+                                                    FontWeight="SemiBold"
+                                                    Text="{Binding Descricao}" />
+
+                                                <TextBlock FontSize="11" Text="{Binding Categoria}" />
+
+                                                <TextBlock FontSize="10" Text="{Binding DataMovimento, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" />
+                                            </StackPanel>
+
                                             <TextBlock
-                                                FontSize="13"
-                                                FontWeight="SemiBold"
-                                                Text="{Binding Descricao}" />
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                FontWeight="Bold"
+                                                Text="{Binding Valor, StringFormat='R$ {0:N2}'}" />
+                                        </Grid>
 
-                                            <TextBlock FontSize="11" Text="{Binding Categoria}" />
-
-                                            <TextBlock FontSize="10" Text="{Binding DataMovimento, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" />
-                                        </StackPanel>
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            FontWeight="Bold"
-                                            Text="{Binding Valor, StringFormat='R$ {0:N2}'}" />
-                                    </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

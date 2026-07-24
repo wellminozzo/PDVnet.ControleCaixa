@@ -42,7 +42,7 @@ public partial class App : Application
 
         // ViewModels
 
-        services.AddTransient<TransacoesViewModel>();
+            services.AddTransient<TransacoesViewModel>();
             services.AddTransient<DashBoardViewModel>();
             services.AddTransient<FluxoDeCaixaViewModel>();
 

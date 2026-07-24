@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PDVnet.ControleCaixa.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6a5e82acbb65971464bd0eaf82cb5f2065956aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06e712370a8d543335277e9865c3c205b1d5a98f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PDVnet.ControleCaixa.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PDVnet.ControleCaixa.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

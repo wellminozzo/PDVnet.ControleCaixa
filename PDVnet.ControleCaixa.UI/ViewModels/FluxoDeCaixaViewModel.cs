@@ -11,7 +11,42 @@ namespace PDVnet.ControleCaixa.UI.ViewModels;
 public class FluxoDeCaixaViewModel : BaseViewModel
 {
     private readonly MovimentacaoService _movimentacaoService;
+    private readonly ConfiguracaoCaixaService _configuracaoCaixaService;
     public ObservableCollection<MovimentacaoCaixa> Movimentacoes { get; } = new();
+    
+
+    // ==================== SALDO INICIAL ====================
+
+    private decimal _saldoMinimo = 100m;
+    public decimal SaldoMinimo
+    {
+        get => _saldoMinimo;
+        set
+        {
+            _saldoMinimo = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(SaldoBaixo));
+        }
+    }
+
+    private decimal _saldoInicial;
+    public decimal SaldoInicial
+    {
+        get => _saldoInicial;
+        set
+        {
+            _saldoInicial = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Saldo));
+        }
+    }
+
+    private bool _editandoSaldoInicial;
+    public bool EditandoSaldoInicial
+    {
+        get => _editandoSaldoInicial;
+        set { _editandoSaldoInicial = value; OnPropertyChanged(); }
+    }
 
     // ==================== FILTROS E BUSCA ====================
 
@@ -72,28 +107,88 @@ public class FluxoDeCaixaViewModel : BaseViewModel
         .Where(m => m.Tipo == 1)
         .Sum(m => m.Valor);
 
-    public decimal Saldo => TotalEntradas - TotalSaidas;
+    public decimal Saldo => SaldoInicial + TotalEntradas - TotalSaidas;
+
+    public bool SaldoBaixo => Saldo < SaldoMinimo;
+
 
     public ICommand SalvarCommand { get; }
     public ICommand LimparCommand { get; }
     public ICommand ExcluirCommand { get; }
     public ICommand CarregarCommand { get; }
     public ICommand FiltrarCommand { get; }
+    public ICommand EditarCommand { get; }
     public ICommand LimparFiltroCommand { get; }
+    public ICommand EditarSaldoInicialCommand { get; }
+    public ICommand SalvarSaldoInicialCommand { get; }
+    public ICommand CancelarSaldoInicialCommand { get; }
 
-    public FluxoDeCaixaViewModel(MovimentacaoService movimentacaoService)
+
+    public FluxoDeCaixaViewModel(MovimentacaoService movimentacaoService, ConfiguracaoCaixaService configuracaoCaixaService)
     {
         _movimentacaoService = movimentacaoService;
+        _configuracaoCaixaService = configuracaoCaixaService;
 
-       // SalvarCommand = new RelayCommand(async _ => await SalvarAsync(), _ => PodeSalvar());
+        // SalvarCommand = new RelayCommand(async _ => await SalvarAsync(), _ => PodeSalvar());
         //LimparCommand = new RelayCommand(_ => LimparFormulario());
         ExcluirCommand = new RelayCommand(async param => await ExcluirAsync(param), param => param != null);
         CarregarCommand = new RelayCommand(async _ => await CarregarMovimentacoesAsync());
         FiltrarCommand = new RelayCommand(_ => AplicarFiltro());
         LimparFiltroCommand = new RelayCommand(_ => LimparFiltros());
+        EditarCommand = new RelayCommand(async param => await EditarAsync(param), param => param != null);
+
+        EditarSaldoInicialCommand = new RelayCommand(_ => EditandoSaldoInicial = true);
+        SalvarSaldoInicialCommand = new RelayCommand(async _ => await SalvarSaldoInicialAsync());
+        CancelarSaldoInicialCommand = new RelayCommand(async _ => await CancelarEdicaoSaldoInicialAsync());
+
+        _ = InicializarAsync();
 
         // Carrega automaticamente
-        _ = CarregarMovimentacoesAsync();
+        
+    }
+
+    private async Task InicializarAsync()
+    {
+        await CarregarSaldoInicialAsync();
+        await CarregarMovimentacoesAsync();
+
+    }
+
+    private async Task CarregarSaldoInicialAsync()
+    {
+        try
+        {
+            SaldoInicial = await _configuracaoCaixaService.ObterSaldoInicialAsync();
+            SaldoMinimo = await _configuracaoCaixaService.ObterSaldoMinimoAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Erro ao carregar configuração: {ex.Message}", "Erro",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private async Task SalvarSaldoInicialAsync()
+    {
+        try
+        {
+            await _configuracaoCaixaService.SalvarConfiguracaoAsync(SaldoInicial, SaldoMinimo);
+            EditandoSaldoInicial = false;
+            OnPropertyChanged(nameof(Saldo));
+            OnPropertyChanged(nameof(SaldoBaixo));
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Erro ao salvar configuração: {ex.Message}", "Erro",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private async Task CancelarEdicaoSaldoInicialAsync()
+    {
+        // desfaz alteração não salva, recarregando o valor persistido
+        await CarregarSaldoInicialAsync();
+        EditandoSaldoInicial = false;
     }
     //private void PreencherFormulario(MovimentacaoCaixa mov)
     //{
@@ -175,6 +270,23 @@ public class FluxoDeCaixaViewModel : BaseViewModel
         }
     }
 
+    private async Task EditarAsync(object? param)
+    {
+        if (param is MovimentacaoCaixa mov)
+        {
+            MovimentacaoSelecionada = new MovimentacaoCaixa
+            {
+                Id = mov.Id,
+                Tipo = mov.Tipo,
+                Descricao = mov.Descricao,
+                Valor = mov.Valor,
+                DataMovimento = mov.DataMovimento,
+                Categoria = mov.Categoria,
+                Status = mov.Status
+            };
+        }
+    }
+
     private void LimparFiltros()
     {
         TextoBusca = string.Empty;
@@ -182,10 +294,23 @@ public class FluxoDeCaixaViewModel : BaseViewModel
         AplicarFiltro();
     }
 
+    //private void PreencherFormulario(MovimentacaoCaixa mov)
+    //{
+    //    Id = mov.Id;
+    //    Descricao = mov.Descricao;
+    //    Valor = mov.Valor;
+    //    DataMovimento = mov.DataMovimento;
+    //    CategoriaSelecionada = mov.Categoria;
+    //    Status = mov.Status;
+
+
+    //}
+
     private void AtualizarTotalizadores()
     {
         OnPropertyChanged(nameof(TotalEntradas));
         OnPropertyChanged(nameof(TotalSaidas));
         OnPropertyChanged(nameof(Saldo));
+        OnPropertyChanged(nameof(SaldoBaixo));
     }
 }

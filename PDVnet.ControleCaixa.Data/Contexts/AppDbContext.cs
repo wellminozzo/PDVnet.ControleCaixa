@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PDVnet.ControleCaixa.Model.Caixa;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 
 namespace PDVnet.ControleCaixa.Data.Contexts
 {
@@ -18,6 +14,8 @@ namespace PDVnet.ControleCaixa.Data.Contexts
         }
 
         public DbSet<MovimentacaoCaixa> MovimentacaoCaixa {  get; set; }
-        
+
+        public DbSet<ConfiguracaoCaixa> ConfiguracoesCaixa { get; set; }
+
     }
 }

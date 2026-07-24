@@ -38,10 +38,11 @@ public partial class App : Application
 
             // Services
             services.AddSingleton<MovimentacaoService>();
+            services.AddSingleton<ConfiguracaoCaixaService>();
 
-            // ViewModels
-           
-            services.AddTransient<TransacoesViewModel>();
+        // ViewModels
+
+        services.AddTransient<TransacoesViewModel>();
             services.AddTransient<DashBoardViewModel>();
             services.AddTransient<FluxoDeCaixaViewModel>();
 

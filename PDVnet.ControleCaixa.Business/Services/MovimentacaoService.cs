@@ -34,5 +34,10 @@ public class MovimentacaoService
     }
 
     public Task ExcluirMovimentacaoAsync(int id) => _repository.DeleteAsync(id);
+
+    public async Task<List<MovimentacaoCaixa>> ObterUltimasMovimentacoesAsync()
+    {
+        return await _repository.ObterUltimasMovimentacoesAsync(5);
+    }
     
 }

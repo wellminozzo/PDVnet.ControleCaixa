@@ -1,9 +1,30 @@
-﻿namespace PDVnet.ControleCaixa.UI.ViewModels;
+﻿using PDVnet.ControleCaixa.Business.Services;
+using PDVnet.ControleCaixa.Model.Caixa;
+using System.Collections.ObjectModel;
+
+namespace PDVnet.ControleCaixa.UI.ViewModels;
 
 public class DashBoardViewModel : BaseViewModel
 {
-    public DashBoardViewModel()
+    private readonly MovimentacaoService _movimentacaoService;
+
+    public ObservableCollection<MovimentacaoCaixa> UltimasMovimentacoes { get; set; }
+        = new();
+
+    public DashBoardViewModel(MovimentacaoService movimentacaoService)
     {
-        // Construtor vazio é suficiente se não precisar de dependências
+        _movimentacaoService = movimentacaoService;
+    }
+
+    public async Task ObterUltimosCinco()
+    {
+        var movimentacoes = await _movimentacaoService.ObterUltimasMovimentacoesAsync();
+
+        UltimasMovimentacoes.Clear();
+
+        foreach (var item in movimentacoes)
+        {
+            UltimasMovimentacoes.Add(item);
+        }
     }
 }

@@ -12,8 +12,8 @@ using PDVnet.ControleCaixa.Data.Contexts;
 namespace PDVnet.ControleCaixa.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260724011458_initial")]
-    partial class initial
+    [Migration("20260724115911_InitialPDV")]
+    partial class InitialPDV
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

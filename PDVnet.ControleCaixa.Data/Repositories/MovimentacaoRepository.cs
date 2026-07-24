@@ -3,6 +3,7 @@ using PDVnet.ControleCaixa.Data.Contexts;
 using PDVnet.ControleCaixa.Model.Caixa;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace PDVnet.ControleCaixa.Data.Repositories;
@@ -47,5 +48,31 @@ public class MovimentacaoRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<List<MovimentacaoCaixa>> ObterUltimasMovimentacoesAsync(int quantidade = 5)
+    {
+        return await _context.MovimentacaoCaixa
+     .Where(x => x.Status)
+     .OrderByDescending(x => x.DataMovimento)
+     .Take(quantidade)
+     .ToListAsync();
+    }
+
+    //public async Task<List<MovimentacaoCaixa>> ObterAsync(
+    //Expression<Func<MovimentacaoCaixa, bool>>? filtro = null,
+    //int? take = null)
+    //{
+    //    IQueryable<MovimentacaoCaixa> query = _context.MovimentacaoCaixa;
+
+    //    if (filtro != null)
+    //        query = query.Where(filtro);
+
+    //    query = query.OrderByDescending(x => x.DataMovimento);
+
+    //    if (take.HasValue)
+    //        query = query.Take(take.Value);
+
+    //    return await query.ToListAsync();
+    //}
 
 }

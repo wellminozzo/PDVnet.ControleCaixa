@@ -66,15 +66,7 @@ public class TransacoesViewModel : BaseViewModel
     // ==================== LISTAS E SELEÇÃO ====================
 
     public ObservableCollection<MovimentacaoCaixa> Movimentacoes { get; } = new();
-    public ObservableCollection<string> Categorias { get; } = new()
-    {
-        "Vendas",
-        "Despesas Operacionais",
-        "Salários",
-        "Impostos",
-        "Suprimentos",
-        "Outros"
-    };
+    
 
     private MovimentacaoCaixa? _movimentacaoSelecionada;
     public MovimentacaoCaixa? MovimentacaoSelecionada

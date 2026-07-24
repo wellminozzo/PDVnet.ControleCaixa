@@ -10,127 +10,300 @@
     Background="#F5F7FA"
     mc:Ignorable="d">
 
-    <!-- Lista de Movimentações -->
+    <!--  Lista de Movimentações  -->
     <Grid Background="#F5F7FA">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- Header -->
-            <RowDefinition Height="Auto"/>
-            <!-- Totalizadores -->
-            <RowDefinition Height="Auto"/>
-            <!-- Filtros -->
-            <RowDefinition Height="Auto"/>
-            <!-- Formulário -->
-            <RowDefinition Height="*"/>
-            <!-- Lista -->
+            <RowDefinition Height="Auto" />
+            <!--  Header  -->
+            <RowDefinition Height="Auto" />
+            <!--  Totalizadores  -->
+            <RowDefinition Height="Auto" />
+            <!--  Filtros  -->
+            <RowDefinition Height="Auto" />
+            <!--  Formulário  -->
+            <RowDefinition Height="*" />
+            <!--  Lista  -->
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
+        <!--  HEADER  -->
         <Border Style="{StaticResource HeaderPanelStyle}">
             <StackPanel>
-                <TextBlock Text="ATIVIDADES"
-                    FontSize="11" FontWeight="SemiBold"
-                    Foreground="#6EE7B7" Margin="0,0,0,4"/>
-                <TextBlock Text="Fluxo de Caixa"
-                    FontSize="24" FontWeight="Bold"
-                    Foreground="White"/>
+                <TextBlock
+                    Margin="0,0,0,4"
+                    FontSize="11"
+                    FontWeight="SemiBold"
+                    Foreground="#6EE7B7"
+                    Text="ATIVIDADES" />
+                <TextBlock
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Fluxo de Caixa" />
             </StackPanel>
         </Border>
 
-        <!-- TOTALIZADORES -->
+        <!--  TOTALIZADORES  -->
         <Grid Grid.Row="1" Margin="20,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Background="#E8F5E9" CornerRadius="8" Padding="15" Margin="0,0,10,0">
+            <Border
+                Grid.Column="0"
+                Margin="0,0,10,0"
+                Padding="15"
+                Background="#E8F5E9"
+                CornerRadius="8">
                 <StackPanel>
-                    <TextBlock Text="Total Entradas" Foreground="#2E7D32" FontSize="12"/>
-                    <TextBlock Text="{Binding TotalEntradas, StringFormat=C}" 
-                             FontSize="20" FontWeight="Bold" Foreground="#2E7D32"/>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="#2E7D32"
+                        Text="Total Entradas" />
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="#2E7D32"
+                        Text="{Binding TotalEntradas, StringFormat=C}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="1" Background="#FFEBEE" CornerRadius="8" Padding="15" Margin="5,0">
+            <Border
+                Grid.Column="1"
+                Margin="5,0"
+                Padding="15"
+                Background="#FFEBEE"
+                CornerRadius="8">
                 <StackPanel>
-                    <TextBlock Text="Total Saídas" Foreground="#C62828" FontSize="12"/>
-                    <TextBlock Text="{Binding TotalSaidas, StringFormat=C}" 
-                             FontSize="20" FontWeight="Bold" Foreground="#C62828"/>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="#C62828"
+                        Text="Total Saídas" />
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="#C62828"
+                        Text="{Binding TotalSaidas, StringFormat=C}" />
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="2" Background="#E3F2FD" CornerRadius="8" Padding="15" Margin="10,0,0,0">
+            <Border
+                Grid.Column="2"
+                Margin="10,0,0,0"
+                Padding="15"
+                CornerRadius="8">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#E3F2FD" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SaldoBaixo}" Value="True">
+                                <Setter Property="Background" Value="#FFEBEE" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <StackPanel>
-                    <TextBlock Text="Saldo" Foreground="#1565C0" FontSize="12"/>
-                    <TextBlock Text="{Binding Saldo, StringFormat=C}" 
-                             FontSize="20" FontWeight="Bold" Foreground="#1565C0"/>
+                    <TextBlock FontSize="12" Text="Saldo">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="#1565C0" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SaldoBaixo}" Value="True">
+                                        <Setter Property="Foreground" Value="#C62828" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="{Binding Saldo, StringFormat=C}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="#1565C0" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SaldoBaixo}" Value="True">
+                                        <Setter Property="Foreground" Value="#C62828" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <!--  Alerta visível só quando saldo está baixo  -->
+                    <StackPanel
+                        Margin="0,6,0,0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding SaldoBaixo, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="#C62828"
+                            Text="⚠" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="10"
+                            Foreground="#C62828"
+                            Text="Saldo abaixo do mínimo!" />
+                    </StackPanel>
+
+                    <!--  MODO EXIBIÇÃO: botão pra entrar em modo edição  -->
+                    <StackPanel
+                        Margin="0,8,0,0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding EditandoSaldoInicial, Converter={StaticResource InverseBoolToVisibility}}">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="10"
+                            Foreground="#1565C0"
+                            Text="{Binding SaldoInicial, StringFormat='Inicial: {0:C}'}" />
+                        <Button
+                            Margin="8,0,0,0"
+                            Command="{Binding EditarSaldoInicialCommand}"
+                            Content="Editar"
+                            FontSize="10" />
+                    </StackPanel>
+
+                    <!--  MODO EDIÇÃO: SaldoInicial + SaldoMinimo  -->
+                    <StackPanel
+                        Margin="0,8,0,0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding EditandoSaldoInicial, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="9"
+                                Foreground="#1565C0"
+                                Text="Inicial" />
+                            <TextBox
+                                Width="70"
+                                FontSize="11"
+                                Text="{Binding SaldoInicial, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Margin="6,0,0,0">
+                            <TextBlock
+                                FontSize="9"
+                                Foreground="#1565C0"
+                                Text="Mínimo" />
+                            <TextBox
+                                Width="70"
+                                FontSize="11"
+                                Text="{Binding SaldoMinimo, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <Button
+                            Width="24"
+                            Margin="5,14,0,0"
+                            Command="{Binding SalvarSaldoInicialCommand}"
+                            Content="✓"
+                            FontSize="10" />
+                        <Button
+                            Width="24"
+                            Margin="3,14,0,0"
+                            Command="{Binding CancelarSaldoInicialCommand}"
+                            Content="✕"
+                            FontSize="10" />
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>
 
-        <!-- FILTROS -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="20,10">
-            <TextBox Width="200" 
-                     Text="{Binding TextoBusca, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="Buscar..."/>
+        <!--  FILTROS  -->
+        <StackPanel
+            Grid.Row="2"
+            Margin="20,10"
+            Orientation="Horizontal">
+            <TextBox
+                Width="200"
+                Text="{Binding TextoBusca, UpdateSourceTrigger=PropertyChanged}"
+                ToolTip="Buscar..." />
 
-            <ComboBox Width="120" Margin="10,0" 
-                      SelectedItem="{Binding FiltroTipo}">
-                <ComboBoxItem Content="Todos" Tag="{x:Null}"/>
-                <ComboBoxItem Content="Entradas" Tag="0"/>
-                <ComboBoxItem Content="Saídas" Tag="1"/>
+            <ComboBox
+                Width="120"
+                Margin="10,0"
+                SelectedItem="{Binding FiltroTipo}">
+                <ComboBoxItem Content="Todos" Tag="{x:Null}" />
+                <ComboBoxItem Content="Entradas" Tag="0" />
+                <ComboBoxItem Content="Saídas" Tag="1" />
             </ComboBox>
 
-            <Button Content="Limpar Filtros" Command="{Binding LimparFiltroCommand}"/>
+            <Button Command="{Binding LimparFiltroCommand}" Content="Limpar Filtros" />
         </StackPanel>
 
-        <!-- FORMULÁRIO (resumido) -->
-        <Border Grid.Row="3" Margin="20" Padding="15" Background="White" CornerRadius="8">
-            <!-- ... campos do formulário ... -->
+        <!--  FORMULÁRIO (resumido)  -->
+        <Border
+            Grid.Row="3"
+            Margin="20"
+            Padding="15"
+            Background="White"
+            CornerRadius="8">
+            <Grid DataContext="{Binding MovimentacaoSelecionada}">
+                <StackPanel>
+                    <TextBox Text="{Binding Descricao}" />
+                    <ComboBox ItemsSource="{Binding DataContext.Categorias, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Categoria, Mode=TwoWay}" />
+                    <TextBox Text="{Binding Valor}" />
+                    <DatePicker SelectedDate="{Binding DataMovimento}" />
+                </StackPanel>
+            </Grid>
+
         </Border>
 
-        <!-- LISTA -->
-        <Border Grid.Row="4" Margin="20,0,20,20" Background="White" CornerRadius="8">
-            <ListView ItemsSource="{Binding MovimentacoesFiltradas}"
-                      SelectedItem="{Binding MovimentacaoSelecionada}">
+        <!--  LISTA  -->
+        <Border
+            Grid.Row="4"
+            Margin="20,0,20,20"
+            Background="White"
+            CornerRadius="8">
+            <ListView ItemsSource="{Binding MovimentacoesFiltradas}" SelectedItem="{Binding MovimentacaoSelecionada}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                        <GridViewColumn Header="Data/Hora" Width="130">
+                        <GridViewColumn
+                            Width="50"
+                            DisplayMemberBinding="{Binding Id}"
+                            Header="ID" />
+                        <GridViewColumn Width="130" Header="Data/Hora">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding DataMovimento, StringFormat=dd/MM/yyyy HH:mm}"/>
+                                    <TextBlock Text="{Binding DataMovimento, StringFormat=dd/MM/yyyy HH:mm}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Tipo" Width="80">
+                        <GridViewColumn Width="80" Header="Tipo">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Tipo}" 
-                                              Foreground="{Binding Tipo}"/>
+                                    <TextBlock Foreground="{Binding Tipo}" Text="{Binding Tipo}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Categoria" DisplayMemberBinding="{Binding Categoria}" Width="120"/>
-                        <GridViewColumn Header="Descrição" DisplayMemberBinding="{Binding Descricao}" Width="200"/>
-                        <GridViewColumn Header="Valor" Width="100">
+                        <GridViewColumn
+                            Width="120"
+                            DisplayMemberBinding="{Binding Categoria}"
+                            Header="Categoria" />
+                        <GridViewColumn
+                            Width="200"
+                            DisplayMemberBinding="{Binding Descricao}"
+                            Header="Descrição" />
+                        <GridViewColumn Width="100" Header="Valor">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Valor, StringFormat=C}" 
-                                               FontWeight="Bold"
-                                               Foreground="{Binding Tipo}"/>
+                                    <TextBlock
+                                        FontWeight="Bold"
+                                        Foreground="{Binding Tipo}"
+                                        Text="{Binding Valor, StringFormat=C}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="" Width="80">
+
+
+                        <GridViewColumn Width="80" Header="Excluir">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="🗑️" 
-                                            Command="{Binding DataContext.ExcluirCommand, 
-                                                      RelativeSource={RelativeSource AncestorType=ListView}}"
-                                            CommandParameter="{Binding}"/>
+                                    <Button
+                                        Command="{Binding DataContext.ExcluirCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                        CommandParameter="{Binding}"
+                                        Content="🗑️" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

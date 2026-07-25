@@ -64,8 +64,8 @@ namespace PDVnet.ControleCaixa.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("Tipo")
                         .HasColumnType("int");

@@ -11,6 +11,7 @@
         <ResourceDictionary>
 
             <converters:IntToBooleanConverter x:Key="IntToBoolConverter" />
+            <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
             <converters:DashboardConverters x:Key="DashboardConverters" />
             <converters:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisibility" />
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />

@@ -1,5 +1,7 @@
 ﻿using PDVnet.ControleCaixa.UI.ViewModels;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PDVnet.ControleCaixa.UI.Views;
 
@@ -17,5 +19,10 @@ public partial class TransacoesView : UserControl
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
 
+    }
+
+    private void NumeroTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]*$");
     }
 }

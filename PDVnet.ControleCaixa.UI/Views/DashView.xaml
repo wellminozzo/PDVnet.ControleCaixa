@@ -5,70 +5,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    d:DesignHeight="600"
     d:DesignWidth="800"
     Background="{StaticResource BackgroundBrush}"
     mc:Ignorable="d">
 
+    
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Margin="24">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="1" >
+        
+        
+        <Grid >
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <Border Style="{StaticResource HeaderPanelStyle}">
+                <StackPanel>
+                    <TextBlock Text="ATIVIDADES"
+                    FontSize="11" FontWeight="SemiBold"
+                    Foreground="#6EE7B7" Margin="0,0,0,4"/>
+                    <TextBlock Text="DashBoard"
+                    FontSize="24" FontWeight="Bold"
+                    Foreground="White"/>
+                </StackPanel>
+            </Border>
             <!--  ========== TOP CARDS ==========  -->
-            <Grid Grid.Row="0">
+            
+            
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                
+                
 
                 <!--  SALDO TOTAL  -->
-                <Border
-                    Grid.Column="0"
-                    Margin="0,0,12,0"
-                    Style="{StaticResource CardStyle}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Style="{StaticResource CardLabelStyle}" Text="SALDO TOTAL" />
-
-                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C9;" />
-                        </Border>
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                            Margin="0,12,0,8"
-                            Style="{StaticResource ValueLargeStyle}"
-                            Text="{Binding SaldoTotal, StringFormat='R$ {0:N2}'}" />
-
-                        <TextBlock
-                            Grid.Row="2"
-                            Grid.ColumnSpan="2"
-                            FontSize="11"
-                            Foreground="{StaticResource TextSecondaryBrush}"
-                            Text="Saldo atual em caixa" />
-                    </Grid>
-                </Border>
+               
 
                 <!--  ENTRADAS HOJE  -->
                 <Border
-                    Grid.Column="1"
-                    Margin="6,0"
+                    Grid.Column="0"
+                    Margin="24,20,0,0"
                     Style="{StaticResource CardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -84,7 +66,7 @@
 
                         <TextBlock Style="{StaticResource CardLabelStyle}" Text="ENTRADAS HOJE" />
 
-                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
+                        <Border Grid.Column="1"  Style="{StaticResource IconContainerStyle}">
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 Foreground="{StaticResource SuccessBrush}"
@@ -109,8 +91,8 @@
 
                 <!--  SAÍDAS HOJE  -->
                 <Border
-                    Grid.Column="2"
-                    Margin="12,0,0,0"
+                    Grid.Column="1"
+                    Margin="12,20,0,0"
                     Style="{StaticResource CardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -151,14 +133,14 @@
             </Grid>
 
             <!--  ========== BOTTOM SECTION ==========  -->
-            <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid Grid.Row="2" Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <!--  Gráfico  -->
-                <Border Margin="0,0,12,0" Style="{StaticResource CardStyle}">
+                <Border Margin="24,0,1,0" Style="{StaticResource CardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -167,88 +149,52 @@
                         </Grid.RowDefinitions>
 
                         <!--  Header  -->
-                        <Grid>
+                        <Grid Grid.Row="0">
                             <StackPanel>
-                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Fluxo de Caixa Semanal" />
-                                <TextBlock Style="{StaticResource SectionSubtitleStyle}" Text="Trend analysis for the current week" />
+                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Relatórios" />
+                                <TextBlock Style="{StaticResource SectionSubtitleStyle}" Text="Análise Semanal" />
                             </StackPanel>
-                            <Border
-                                Padding="10,4"
-                                HorizontalAlignment="Right"
-                                Background="#FFF3F4F6"
-                                CornerRadius="6">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        FontSize="11"
-                                        Foreground="{StaticResource TextPrimaryBrush}"
-                                        Text="Last 7 Days" />
-                                    <TextBlock
-                                        Margin="6,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="Segoe MDL2 Assets"
-                                        FontSize="8"
-                                        Text="&#xE70D;" />
-                                </StackPanel>
-                            </Border>
                         </Grid>
 
-                        <!--  Tooltip flutuante (posicionado sobre o gráfico)  -->
+                        <!--  Total de movimentações  -->
                         <Border
-                            Grid.Row="2"
-                            Margin="0,10,40,0"
-                            Padding="10,6"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="#FF1F2937"
-                            CornerRadius="6">
-                            <TextBlock
-                                FontSize="11"
-                                FontWeight="SemiBold"
-                                Foreground="White"
-                                Text="{Binding GraficoTooltip, FallbackValue='Today: R$ 12,8k'}" />
+            Grid.Row="1"
+            Margin="0,16,0,0"
+            Padding="14,12"
+            Background="#FFF3F4F6"
+            CornerRadius="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock
+                        FontSize="11"
+                        Foreground="{StaticResource TextSecondaryBrush}"
+                        Text="TOTAL DE MOVIMENTAÇÕES" />
+                                    <TextBlock
+                        Margin="0,4,0,0"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource TextPrimaryBrush}"
+                        Text="{Binding TotalMovimentacoes}" />
+                                </StackPanel>
+
+                               
+                            </Grid>
                         </Border>
 
-                        <!--  Barras  -->
-                        <ItemsControl
-                            Grid.Row="2"
-                            Margin="0,40,0,0"
-                            VerticalAlignment="Bottom"
-                            ItemsSource="{Binding DadosSemanais}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Width="60" Margin="8,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Rectangle
-                                            Grid.Row="0"
-                                            Height="{Binding Valor, Converter={StaticResource ChartHeightConverter}}"
-                                            VerticalAlignment="Bottom"
-                                            Style="{Binding IsToday, Converter={StaticResource BarStyleConverter}}" />
-                                        <TextBlock
-                                            Grid.Row="1"
-                                            Margin="0,8,0,0"
-                                            HorizontalAlignment="Center"
-                                            FontSize="11"
-                                            Foreground="{StaticResource TextSecondaryBrush}"
-                                            Text="{Binding Dia}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                       
+                       
                     </Grid>
                 </Border>
 
                 <!--  Movimentações  -->
                 <Border
                     Grid.Column="1"
-                    Margin="12,0,0,0"
+                    Margin="12,0,21,0"
                     Style="{StaticResource CardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -262,14 +208,7 @@
                                 <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Movimentações" />
                                 <TextBlock Style="{StaticResource SectionSubtitleStyle}" Text="Recentes" />
                             </StackPanel>
-                            <TextBlock
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                Cursor="Hand"
-                                FontSize="11"
-                                FontWeight="SemiBold"
-                                Foreground="{StaticResource TextSecondaryBrush}"
-                                Text="See All" />
+                            
                         </Grid>
 
                         <!--  Lista  -->

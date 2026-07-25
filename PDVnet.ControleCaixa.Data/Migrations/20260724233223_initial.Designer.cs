@@ -12,8 +12,8 @@ using PDVnet.ControleCaixa.Data.Contexts;
 namespace PDVnet.ControleCaixa.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260724115911_InitialPDV")]
-    partial class InitialPDV
+    [Migration("20260724233223_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,28 @@ namespace PDVnet.ControleCaixa.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("PDVnet.ControleCaixa.Model.Caixa.ConfiguracaoCaixa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("SaldoInicial")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SaldoMinimo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConfiguracoesCaixa");
+                });
 
             modelBuilder.Entity("PDVnet.ControleCaixa.Model.Caixa.MovimentacaoCaixa", b =>
                 {
@@ -45,8 +67,8 @@ namespace PDVnet.ControleCaixa.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("Tipo")
                         .HasColumnType("int");

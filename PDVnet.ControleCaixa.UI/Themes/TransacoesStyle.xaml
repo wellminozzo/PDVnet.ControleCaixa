@@ -170,4 +170,20 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="ValidationTextBox" TargetType="TextBox" BasedOn="{StaticResource CustomTextBox}">
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource DangerBrush}"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ValidationMessageStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Margin" Value="0,2,0,0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
 </ResourceDictionary>

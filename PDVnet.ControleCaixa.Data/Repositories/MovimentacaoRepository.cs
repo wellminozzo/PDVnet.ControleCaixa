@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PDVnet.ControleCaixa.Data.Contexts;
 using PDVnet.ControleCaixa.Model.Caixa;
+using PDVnet.ControleCaixa.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -62,8 +63,8 @@ public class MovimentacaoRepository
         var hoje = DateTime.Today;
 
         return await _context.MovimentacaoCaixa
-            .Where(x =>
-                x.Tipo == 0 &&
+            .Where(x => 
+                x.Tipo == TipoMovimentacao.Entrada &&
                 x.DataMovimento.Date == hoje)
             .SumAsync(x => (decimal?)x.Valor) ?? 0;
     }
@@ -74,7 +75,7 @@ public class MovimentacaoRepository
 
         return await _context.MovimentacaoCaixa
             .Where(x =>
-                x.Tipo == 1 &&
+                x.Tipo == TipoMovimentacao.Saida &&
                 x.DataMovimento.Date == hoje)
             .SumAsync(x => (decimal?)x.Valor) ?? 0;
     }
@@ -83,7 +84,7 @@ public class MovimentacaoRepository
     {
         return await _context.MovimentacaoCaixa
             .AsNoTracking()
-            .SumAsync(x => x.Tipo == 0
+            .SumAsync(x => x.Tipo == TipoMovimentacao.Entrada
                 ? x.Valor
                 : -x.Valor);
     }

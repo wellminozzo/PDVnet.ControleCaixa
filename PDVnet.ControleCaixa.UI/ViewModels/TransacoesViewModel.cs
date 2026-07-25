@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PDVnet.ControleCaixa.Business.Services;
 using PDVnet.ControleCaixa.Model.Caixa;
+using PDVnet.ControleCaixa.Model.Enums;
 using PDVnet.ControleCaixa.UI.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -21,11 +22,15 @@ public class TransacoesViewModel : BaseViewModel
         set { _id = value; OnPropertyChanged(); }
     }
 
-    private int _tipo = 0;  
-    public int Tipo
+    private TipoMovimentacao _tipo = TipoMovimentacao.Entrada;
+    public TipoMovimentacao Tipo
     {
         get => _tipo;
-        set { _tipo = value; OnPropertyChanged(); }
+        set
+        {
+            _tipo = value;
+            OnPropertyChanged();
+        }
     }
 
     private decimal _valor;
@@ -56,11 +61,15 @@ public class TransacoesViewModel : BaseViewModel
         set { _categoria = value; OnPropertyChanged(); }
     }
 
-    private bool _status;
-    public bool Status
+    private SituacaoStatus _status = SituacaoStatus.Ativo;
+    public SituacaoStatus Status
     {
         get => _status;
-        set { _status = value; OnPropertyChanged(); }
+        set
+        {
+            _status = value;
+            OnPropertyChanged();
+        }
     }
 
     // ==================== LISTAS E SELEÇÃO ====================
@@ -131,7 +140,7 @@ public class TransacoesViewModel : BaseViewModel
         DataMovimento = DateTime.Today;
         Descricao = string.Empty;
         CategoriaSelecionada = string.Empty;
-        Status = false;
+        Status = 0;
         MovimentacaoSelecionada = null;
     }
 

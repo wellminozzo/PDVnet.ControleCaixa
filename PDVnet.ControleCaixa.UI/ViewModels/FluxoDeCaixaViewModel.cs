@@ -1,5 +1,6 @@
 ﻿using PDVnet.ControleCaixa.Business.Services;
 using PDVnet.ControleCaixa.Model.Caixa;
+using PDVnet.ControleCaixa.Model.Enums;
 using PDVnet.ControleCaixa.UI.Commands;
 using System.Collections.ObjectModel;
 using System.Net.NetworkInformation;
@@ -100,11 +101,11 @@ public class FluxoDeCaixaViewModel : BaseViewModel
     // ==================== TOTALIZADORES ====================
 
     public decimal TotalEntradas => Movimentacoes
-        .Where(m => m.Tipo == 0)
+        .Where(m => m.Tipo == TipoMovimentacao.Entrada)
         .Sum(m => m.Valor);
 
     public decimal TotalSaidas => Movimentacoes
-        .Where(m => m.Tipo == 1)
+        .Where(m => m.Tipo == TipoMovimentacao.Saida)
         .Sum(m => m.Valor);
 
     public decimal Saldo => SaldoInicial + TotalEntradas - TotalSaidas;
@@ -239,7 +240,8 @@ public class FluxoDeCaixaViewModel : BaseViewModel
         // Filtro por tipo
         if (FiltroTipo.HasValue)
         {
-            filtrada = filtrada.Where(m => m.Tipo == FiltroTipo.Value);
+            filtrada = filtrada.Where(m =>
+             m.Tipo == (TipoMovimentacao)FiltroTipo.Value);
         }
 
         MovimentacoesFiltradas = new ObservableCollection<MovimentacaoCaixa>(filtrada);

@@ -130,7 +130,7 @@ public class FluxoDeCaixaViewModel : BaseViewModel
         _movimentacaoService = movimentacaoService;
         _configuracaoCaixaService = configuracaoCaixaService;
 
-        // SalvarCommand = new RelayCommand(async _ => await SalvarAsync(), _ => PodeSalvar());
+        SalvarCommand = new RelayCommand(async _ => await SalvarAsync());
         //LimparCommand = new RelayCommand(_ => LimparFormulario());
         ExcluirCommand = new RelayCommand(async param => await ExcluirAsync(param), param => param != null);
         CarregarCommand = new RelayCommand(async _ => await CarregarMovimentacoesAsync());
@@ -181,6 +181,23 @@ public class FluxoDeCaixaViewModel : BaseViewModel
         catch (Exception ex)
         {
             MessageBox.Show($"Erro ao salvar configuração: {ex.Message}", "Erro",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private async Task SalvarAsync()
+    {
+        if (MovimentacaoSelecionada is null) return;
+
+        try
+        {
+            await _movimentacaoService.SalvarMovimentacaoAsync(MovimentacaoSelecionada);
+            await CarregarMovimentacoesAsync();
+            MovimentacaoSelecionada = null;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Erro ao salvar: {ex.Message}", "Erro",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }

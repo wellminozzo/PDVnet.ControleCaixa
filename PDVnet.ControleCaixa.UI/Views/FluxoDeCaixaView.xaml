@@ -142,7 +142,8 @@
                             VerticalAlignment="Center"
                             FontSize="12"
                             Foreground="#C62828"
-                            Text="⚠" />
+                            FontFamily="Segoe MDL2 Assets"
+                            Text="&#xE7BA;" />
                         <TextBlock
                             Margin="4,0,0,0"
                             VerticalAlignment="Center"
@@ -169,43 +170,65 @@
                     </StackPanel>
 
                     <!--  MODO EDIÇÃO: SaldoInicial + SaldoMinimo  -->
-                    <StackPanel
+                    <Grid
                         Margin="0,8,0,0"
-                        Orientation="Horizontal"
                         Visibility="{Binding EditandoSaldoInicial, Converter={StaticResource BoolToVisibility}}">
-                        <StackPanel>
-                            <TextBlock
-                                FontSize="9"
-                                Foreground="#1565C0"
-                                Text="Inicial" />
-                            <TextBox
-                                Width="70"
-                                FontSize="11"
-                                Text="{Binding SaldoInicial, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Margin="6,0,0,0">
-                            <TextBlock
-                                FontSize="9"
-                                Foreground="#1565C0"
-                                Text="Mínimo" />
-                            <TextBox
-                                Width="70"
-                                FontSize="11"
-                                Text="{Binding SaldoMinimo, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0" Grid.Column="0"
+                            FontSize="9"
+                            Foreground="#1565C0"
+                            Text="Inicial" />
+                        <TextBlock
+                            Grid.Row="0" Grid.Column="1"
+                            Margin="6,0,0,0"
+                            FontSize="9"
+                            Foreground="#1565C0"
+                            Text="Mínimo" />
+
+                        <TextBox
+                            Grid.Row="1" Grid.Column="0"
+                            Width="70"
+                            FontSize="11"
+                            Text="{Binding SaldoInicial, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Grid.Row="1" Grid.Column="1"
+                            Margin="6,0,0,0"
+                            Width="70"
+                            FontSize="11"
+                            Text="{Binding SaldoMinimo, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" />
+
                         <Button
+                            Grid.Row="1" Grid.Column="2"
                             Width="24"
-                            Margin="5,14,0,0"
+                            Height="24"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
                             Command="{Binding SalvarSaldoInicialCommand}"
-                            Content="✓"
+                            FontFamily="Segoe MDL2 Assets"
+                            Content="&#xE8FB;"
                             FontSize="10" />
                         <Button
+                            Grid.Row="1" Grid.Column="3"
                             Width="24"
-                            Margin="3,14,0,0"
+                            Height="24"
+                            Margin="3,0,0,0"
+                            VerticalAlignment="Center"
                             Command="{Binding CancelarSaldoInicialCommand}"
-                            Content="✕"
+                            FontFamily="Segoe MDL2 Assets"
+                            Content="&#xE711;"
                             FontSize="10" />
-                    </StackPanel>
+                    </Grid>
                 </StackPanel>
             </Border>
         </Grid>
@@ -240,12 +263,25 @@
             Background="White"
             CornerRadius="8">
             <Grid DataContext="{Binding MovimentacaoSelecionada}">
-                <StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
                     <TextBox Text="{Binding Descricao}" />
                     <ComboBox ItemsSource="{Binding DataContext.Categorias, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Categoria, Mode=TwoWay}" />
-                    <TextBox Text="{Binding Valor}" />
+                    <TextBox Text="{Binding Valor, StringFormat=N2}" />
                     <DatePicker SelectedDate="{Binding DataMovimento}" />
                 </StackPanel>
+
+                <Button
+                    Grid.Row="1"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Command="{Binding DataContext.SalvarCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Content="Salvar"
+                    Style="{StaticResource SaveButton}" />
             </Grid>
 
         </Border>
@@ -303,7 +339,8 @@
                                     <Button
                                         Command="{Binding DataContext.ExcluirCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}"
-                                        Content="🗑️" />
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Content="&#xE107;" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

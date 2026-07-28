@@ -19,7 +19,7 @@ public class MovimentacaoCaixa
     public string Categoria { get; set; } = string.Empty;
 
     [Required]
-    [Range(0, double.MaxValue, ErrorMessage = "O valor deve ser positivo")]
+    [Range(typeof(decimal), "0.01", "999999999999.99", ErrorMessage = "O valor deve ser positivo")]
     public decimal Valor { get; set; }
 
     public DateTime DataMovimento { get; set; }

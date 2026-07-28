@@ -5,6 +5,7 @@ using PDVnet.ControleCaixa.Data;
 using PDVnet.ControleCaixa.Data.Repositories;
 using PDVnet.ControleCaixa.UI.ViewModels;
 using PDVnet.ControleCaixa.UI.Views;
+using System.Globalization;
 using System.Windows;
 
 namespace PDVnet.ControleCaixa.UI;
@@ -15,6 +16,10 @@ public partial class App : Application
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        var culture = new CultureInfo("pt-BR");
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+
         var configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
@@ -38,6 +43,7 @@ public partial class App : Application
     {
         // Repositories
         services.AddSingleton<MovimentacaoRepository>();
+        services.AddSingleton<ConfiguracaoCaixaRepository>();
 
         // Services
         services.AddSingleton<MovimentacaoService>();

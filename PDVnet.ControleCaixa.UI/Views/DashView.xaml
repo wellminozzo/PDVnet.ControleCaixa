@@ -66,10 +66,12 @@
 
                         <TextBlock Style="{StaticResource CardLabelStyle}" Text="ENTRADAS HOJE" />
 
-                        <Border Grid.Column="1"  Style="{StaticResource IconContainerStyle}">
+                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 Foreground="{StaticResource SuccessBrush}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 Text="&#xE74B;" />
                         </Border>
 
@@ -78,7 +80,7 @@
                             Grid.ColumnSpan="2"
                             Margin="0,12,0,8"
                             Style="{StaticResource ValuePositiveStyle}"
-                            Text="{Binding EntradasHoje, StringFormat='R$ {0:N2}'}" />
+                            Text="{Binding EntradasHoje, StringFormat=C}" />
 
                         <TextBlock
                             Grid.Row="2"
@@ -112,6 +114,8 @@
                             <TextBlock
                                 FontFamily="Segoe MDL2 Assets"
                                 Foreground="{StaticResource DangerBrush}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 Text="&#xE74A;" />
                         </Border>
 
@@ -120,7 +124,7 @@
                             Grid.ColumnSpan="2"
                             Margin="0,12,0,8"
                             Style="{StaticResource ValueNegativeStyle}"
-                            Text="{Binding SaidasHoje, StringFormat='R$ {0:N2}'}" />
+                            Text="{Binding SaidasHoje, StringFormat=C}" />
 
                         <TextBlock
                             Grid.Row="2"
@@ -128,6 +132,52 @@
                             FontSize="11"
                             Foreground="{StaticResource TextSecondaryBrush}"
                             Text="Saídas registradas hoje" />
+                    </Grid>
+                </Border>
+
+                <!--  SALDO TOTAL  -->
+                <Border
+                    Grid.Column="2"
+                    Margin="12,20,24,0"
+                    Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Style="{StaticResource CardLabelStyle}" Text="SALDO TOTAL" />
+
+                        <Border Grid.Column="1" Style="{StaticResource IconContainerStyle}">
+                            <TextBlock
+                                FontFamily="Segoe MDL2 Assets"
+                                Foreground="#1565C0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="&#xE806;" />
+                        </Border>
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Margin="0,12,0,8"
+                            FontSize="28"
+                            FontWeight="Bold"
+                            Foreground="#1565C0"
+                            Text="{Binding SaldoTotal, StringFormat=C}" />
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            FontSize="11"
+                            Foreground="{StaticResource TextSecondaryBrush}"
+                            Text="Saldo geral do caixa" />
                     </Grid>
                 </Border>
             </Grid>
@@ -245,7 +295,7 @@
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
                                                 FontWeight="Bold"
-                                                Text="{Binding Valor, StringFormat='R$ {0:N2}'}" />
+                                                Text="{Binding Valor, StringFormat=C}" />
                                         </Grid>
 
                                     </Border>

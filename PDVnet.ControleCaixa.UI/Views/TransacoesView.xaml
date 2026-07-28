@@ -67,15 +67,16 @@
                                      Converter={StaticResource EnumToBooleanConverter}, 
                                      ConverterParameter=Saida, 
                                      Mode=TwoWay}"
-                         Margin="-4,0,0,0"/>
+                            />
                         </UniformGrid>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Valor" Style="{StaticResource LabelStyle}"/>
-                        <TextBox Style="{StaticResource CustomTextBox}"
+                        <TextBox x:Name="ValorTextBox"
+                             Style="{StaticResource CustomTextBox}"
                              PreviewTextInput="NumeroTextBox_PreviewTextInput"
-                             Text="{Binding Valor, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding Valor, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </Grid>
 
@@ -105,13 +106,9 @@
                 <!-- Linha 3: Descrição -->
                 <StackPanel Grid.Row="2" Margin="0,0,0,24">
                     <TextBlock Text="Descrição" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="DescricaoTextBox"
+                    <TextBox
              Style="{StaticResource ValidationTextBox}"
-             Text="{Binding Descricao, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
-
-                    <TextBlock Style="{StaticResource ValidationMessageStyle}"
-               Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=DescricaoTextBox}"
-               Visibility="{Binding (Validation.HasError), ElementName=DescricaoTextBox, Converter={StaticResource BoolToVisibility}}"/>
+             Text="{Binding Descricao, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
 
                 <!-- Linha 4: Botões -->

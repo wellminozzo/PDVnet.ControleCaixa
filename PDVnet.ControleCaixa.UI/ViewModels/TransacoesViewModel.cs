@@ -170,10 +170,11 @@ public class TransacoesViewModel : BaseViewModel
         {
             var movimentacao = new MovimentacaoCaixa
             {
+                Id = Id,
                 Descricao = Descricao,
                 Tipo = Tipo,
                 Valor = Valor,
-                DataMovimento = DateTime.Now,
+                DataMovimento = DataMovimento,
                 Categoria = CategoriaSelecionada,
                 Status = Status
             };

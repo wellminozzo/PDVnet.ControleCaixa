@@ -8,14 +8,13 @@
     Title="MainView"
     Width="800"
     Height="600"
-    DataContext="{Binding CurrentView}"
     mc:Ignorable="d">
     <Grid Background="#A9ABAD">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
+
         <!--  Sidebar  -->
         <StackPanel
             Grid.Column="0"
@@ -25,20 +24,50 @@
             <Button
                 Height="40"
                 Margin="5"
-                Command="{Binding ShowDashboardCommand}"
-                Content="Dashboard" />
+                Foreground="White"
+                HorizontalContentAlignment="Center"
+                Command="{Binding ShowDashboardCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        FontFamily="Segoe MDL2 Assets"
+                        Text="&#xE80F;"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center" />
+                    <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
 
             <Button
                 Height="40"
                 Margin="5"
-                Command="{Binding ShowTransacoesCommand}"
-                Content="Transações" />
+                Foreground="White"
+                HorizontalContentAlignment="Center"
+                Command="{Binding ShowTransacoesCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        FontFamily="Segoe MDL2 Assets"
+                        Text="&#xE13D;"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center" />
+                    <TextBlock Text="Transações" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
 
             <Button
                 Height="40"
                 Margin="5"
-                Command="{Binding ShowFluxoDeCaixaCommand}"
-                Content="Fluxo de Caixa" />
+                Foreground="White"
+                HorizontalContentAlignment="Center"
+                Command="{Binding ShowFluxoDeCaixaCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        FontFamily="Segoe MDL2 Assets"
+                        Text="&#xE806;"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center" />
+                    <TextBlock Text="Fluxo de Caixa" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <!--  Conteúdo  -->

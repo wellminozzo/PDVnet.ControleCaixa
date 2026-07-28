@@ -154,6 +154,7 @@
                                 Width="16"
                                 Height="16"
                                 Margin="0,0,8,0"
+                                VerticalAlignment="Center"
                                 Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z"
                                 Fill="White"
                                 Stretch="Uniform" />
@@ -166,6 +167,10 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#0A3D2E" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.45" />
+                <Setter Property="Background" Value="#94A3B8" />
             </Trigger>
         </Style.Triggers>
     </Style>

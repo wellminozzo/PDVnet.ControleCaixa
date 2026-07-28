@@ -23,6 +23,36 @@ public partial class TransacoesView : UserControl
 
     private void NumeroTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]*$");
+        if (string.IsNullOrEmpty(e.Text)) return;
+
+        var textBox = sender as TextBox;
+        if (textBox is null) return;
+
+        var novoTexto = textBox.Text[..textBox.SelectionStart] + e.Text + textBox.Text[(textBox.SelectionStart + textBox.SelectionLength)..];
+
+        if (!decimal.TryParse(novoTexto, out _))
+        {
+            var textoLimpo = novoTexto;
+            if (textoLimpo.EndsWith(',') || textoLimpo.EndsWith('.'))
+                textoLimpo += '0';
+
+            if (!decimal.TryParse(textoLimpo, out _))
+            {
+                e.Handled = true;
+                return;
+            }
+        }
+
+        if (novoTexto.Count(c => c == ',' || c == '.') > 1)
+        {
+            e.Handled = true;
+            return;
+        }
+
+        if (novoTexto.Replace(",", "").Replace(".", "").Length > 18)
+        {
+            e.Handled = true;
+            return;
+        }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PDVnet.ControleCaixa.Business.Services;
-using PDVnet.ControleCaixa.Data.Contexts;
+using PDVnet.ControleCaixa.Data;
 using PDVnet.ControleCaixa.Data.Repositories;
 using PDVnet.ControleCaixa.UI.ViewModels;
 using PDVnet.ControleCaixa.UI.Views;
@@ -9,55 +9,55 @@ using System.Windows;
 
 namespace PDVnet.ControleCaixa.UI;
 
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
 public partial class App : Application
 {
-    
-        public static IServiceProvider ServiceProvider { get; private set; }
+    public static IServiceProvider ServiceProvider { get; private set; }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            var services = new ServiceCollection();
-            ConfigureServices(services);
+    private void Application_Startup(object sender, StartupEventArgs e)
+    {
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
 
-            ServiceProvider = services.BuildServiceProvider();
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            var mainViewModel = new MainViewModel();
-            var mainView = new MainView(mainViewModel);
-            mainView.Show();
-        }
+        var services = new ServiceCollection();
+        services.AddSingleton<IConfiguration>(configuration);
+        services.AddSingleton(new SqlConnectionFactory(connectionString));
+        ConfigureServices(services);
 
-        private void ConfigureServices(IServiceCollection services)
-        {
+        ServiceProvider = services.BuildServiceProvider();
 
-            services.AddDbContext<AppDbContext>();
-            // Repositories
-            services.AddSingleton<MovimentacaoRepository>();
+        var mainViewModel = new MainViewModel();
+        var mainView = new MainView(mainViewModel);
+        mainView.Show();
+    }
 
-            // Services
-            services.AddSingleton<MovimentacaoService>();
-            services.AddSingleton<ConfiguracaoCaixaService>();
+    private void ConfigureServices(IServiceCollection services)
+    {
+        // Repositories
+        services.AddSingleton<MovimentacaoRepository>();
+
+        // Services
+        services.AddSingleton<MovimentacaoService>();
+        services.AddSingleton<ConfiguracaoCaixaService>();
 
         // ViewModels
+        services.AddTransient<TransacoesViewModel>();
+        services.AddTransient<DashBoardViewModel>();
+        services.AddTransient<FluxoDeCaixaViewModel>();
 
-            services.AddTransient<TransacoesViewModel>();
-            services.AddTransient<DashBoardViewModel>();
-            services.AddTransient<FluxoDeCaixaViewModel>();
+        // Views
+        services.AddSingleton<MainView>();
+    }
 
-            // Views
-            services.AddSingleton<MainView>();
-        }
-
-        protected override void OnExit(ExitEventArgs e)
+    protected override void OnExit(ExitEventArgs e)
+    {
+        if (ServiceProvider is IDisposable disposable)
         {
-            if (ServiceProvider is IDisposable disposable)
-            {
-                disposable.Dispose();
-            }
-            base.OnExit(e);
+            disposable.Dispose();
         }
-    
-
+        base.OnExit(e);
+    }
 }

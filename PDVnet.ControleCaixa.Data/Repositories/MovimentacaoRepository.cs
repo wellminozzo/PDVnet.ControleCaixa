@@ -1,94 +1,170 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PDVnet.ControleCaixa.Data.Contexts;
+﻿using Microsoft.Data.SqlClient;
 using PDVnet.ControleCaixa.Model.Caixa;
 using PDVnet.ControleCaixa.Model.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace PDVnet.ControleCaixa.Data.Repositories;
 
 public class MovimentacaoRepository
 {
-    private readonly AppDbContext _context;
+    private readonly SqlConnectionFactory _connectionFactory;
 
-    public MovimentacaoRepository(AppDbContext context)
+    public MovimentacaoRepository(SqlConnectionFactory connectionFactory)
     {
-        _context = context;
+        _connectionFactory = connectionFactory;
     }
 
     public async Task<List<MovimentacaoCaixa>> GetAllAsync()
     {
-        return await _context.MovimentacaoCaixa.ToListAsync();
+        var lista = new List<MovimentacaoCaixa>();
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(
+            "SELECT Id, Descricao, Tipo, Categoria, Valor, DataMovimento, Status FROM MovimentacaoCaixa",
+            conexao);
+
+        await conexao.OpenAsync();
+        using var reader = await comando.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            lista.Add(MapearMovimentacao(reader));
+        }
+        return lista;
     }
 
     public async Task<MovimentacaoCaixa?> GetByIdAsync(int id)
     {
-        return await _context.MovimentacaoCaixa.FindAsync(id);
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(
+            "SELECT Id, Descricao, Tipo, Categoria, Valor, DataMovimento, Status FROM MovimentacaoCaixa WHERE Id = @Id",
+            conexao);
+        comando.Parameters.AddWithValue("@Id", id);
+
+        await conexao.OpenAsync();
+        using var reader = await comando.ExecuteReaderAsync();
+        if (await reader.ReadAsync())
+        {
+            return MapearMovimentacao(reader);
+        }
+        return null;
     }
 
     public async Task AddAsync(MovimentacaoCaixa movimentacao)
     {
-        _context.MovimentacaoCaixa.Add(movimentacao);
-        await _context.SaveChangesAsync();
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(@"
+            INSERT INTO MovimentacaoCaixa (Descricao, Tipo, Categoria, Valor, DataMovimento, Status)
+            VALUES (@Descricao, @Tipo, @Categoria, @Valor, @DataMovimento, @Status);
+            SELECT SCOPE_IDENTITY();", conexao);
+
+        comando.Parameters.AddWithValue("@Descricao", movimentacao.Descricao);
+        comando.Parameters.AddWithValue("@Tipo", (int)movimentacao.Tipo);
+        comando.Parameters.AddWithValue("@Categoria", (object?)movimentacao.Categoria ?? DBNull.Value);
+        comando.Parameters.AddWithValue("@Valor", movimentacao.Valor);
+        comando.Parameters.AddWithValue("@DataMovimento", movimentacao.DataMovimento);
+        comando.Parameters.AddWithValue("@Status", (int)movimentacao.Status);
+
+        await conexao.OpenAsync();
+        var id = Convert.ToInt32(await comando.ExecuteScalarAsync());
+        movimentacao.Id = id;
     }
 
     public async Task UpdateAsync(MovimentacaoCaixa movimentacao)
     {
-        _context.MovimentacaoCaixa.Update(movimentacao);
-        await _context.SaveChangesAsync();
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(@"
+            UPDATE MovimentacaoCaixa
+            SET Descricao = @Descricao, Tipo = @Tipo, Categoria = @Categoria,
+                Valor = @Valor, DataMovimento = @DataMovimento, Status = @Status
+            WHERE Id = @Id", conexao);
+
+        comando.Parameters.AddWithValue("@Id", movimentacao.Id);
+        comando.Parameters.AddWithValue("@Descricao", movimentacao.Descricao);
+        comando.Parameters.AddWithValue("@Tipo", (int)movimentacao.Tipo);
+        comando.Parameters.AddWithValue("@Categoria", (object?)movimentacao.Categoria ?? DBNull.Value);
+        comando.Parameters.AddWithValue("@Valor", movimentacao.Valor);
+        comando.Parameters.AddWithValue("@DataMovimento", movimentacao.DataMovimento);
+        comando.Parameters.AddWithValue("@Status", (int)movimentacao.Status);
+
+        await conexao.OpenAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
     public async Task DeleteAsync(int id)
     {
-        var movimentacao = await _context.MovimentacaoCaixa.FindAsync(id);
-        if (movimentacao != null)
-        {
-            _context.MovimentacaoCaixa.Remove(movimentacao);
-            await _context.SaveChangesAsync();
-        }
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand("DELETE FROM MovimentacaoCaixa WHERE Id = @Id", conexao);
+        comando.Parameters.AddWithValue("@Id", id);
+
+        await conexao.OpenAsync();
+        await comando.ExecuteNonQueryAsync();
     }
 
     public async Task<List<MovimentacaoCaixa>> ObterUltimasMovimentacoesAsync(int quantidade = 5)
     {
-        return await _context.MovimentacaoCaixa
-            .OrderByDescending(x => x.DataMovimento)
-            .Take(quantidade)
-            .ToListAsync();
+        var lista = new List<MovimentacaoCaixa>();
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(@"
+            SELECT TOP (@Quantidade) Id, Descricao, Tipo, Categoria, Valor, DataMovimento, Status
+            FROM MovimentacaoCaixa
+            ORDER BY DataMovimento DESC", conexao);
+        comando.Parameters.AddWithValue("@Quantidade", quantidade);
+
+        await conexao.OpenAsync();
+        using var reader = await comando.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            lista.Add(MapearMovimentacao(reader));
+        }
+        return lista;
     }
 
     public async Task<decimal> ObterTotalEntradasHojeAsync()
     {
-        var hoje = DateTime.Today;
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(@"
+            SELECT ISNULL(SUM(Valor), 0)
+            FROM MovimentacaoCaixa
+            WHERE Tipo = @Tipo AND CAST(DataMovimento AS DATE) = CAST(GETDATE() AS DATE)", conexao);
+        comando.Parameters.AddWithValue("@Tipo", (int)TipoMovimentacao.Entrada);
 
-        return await _context.MovimentacaoCaixa
-            .Where(x => 
-                x.Tipo == TipoMovimentacao.Entrada &&
-                x.DataMovimento.Date == hoje)
-            .SumAsync(x => (decimal?)x.Valor) ?? 0;
+        await conexao.OpenAsync();
+        return Convert.ToDecimal(await comando.ExecuteScalarAsync());
     }
 
     public async Task<decimal> ObterTotalSaidasHojeAsync()
     {
-        var hoje = DateTime.Today;
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(@"
+            SELECT ISNULL(SUM(Valor), 0)
+            FROM MovimentacaoCaixa
+            WHERE Tipo = @Tipo AND CAST(DataMovimento AS DATE) = CAST(GETDATE() AS DATE)", conexao);
+        comando.Parameters.AddWithValue("@Tipo", (int)TipoMovimentacao.Saida);
 
-        return await _context.MovimentacaoCaixa
-            .Where(x =>
-                x.Tipo == TipoMovimentacao.Saida &&
-                x.DataMovimento.Date == hoje)
-            .SumAsync(x => (decimal?)x.Valor) ?? 0;
+        await conexao.OpenAsync();
+        return Convert.ToDecimal(await comando.ExecuteScalarAsync());
     }
 
     public async Task<decimal> ObterSaldoTotalAsync()
     {
-        return await _context.MovimentacaoCaixa
-            .AsNoTracking()
-            .SumAsync(x => x.Tipo == TipoMovimentacao.Entrada
-                ? x.Valor
-                : -x.Valor);
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand(@"
+            SELECT ISNULL(SUM(CASE WHEN Tipo = 0 THEN Valor ELSE -Valor END), 0)
+            FROM MovimentacaoCaixa", conexao);
+
+        await conexao.OpenAsync();
+        return Convert.ToDecimal(await comando.ExecuteScalarAsync());
     }
 
-
-
+    private static MovimentacaoCaixa MapearMovimentacao(SqlDataReader reader)
+    {
+        return new MovimentacaoCaixa
+        {
+            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+            Descricao = reader.GetString(reader.GetOrdinal("Descricao")),
+            Tipo = (TipoMovimentacao)reader.GetInt32(reader.GetOrdinal("Tipo")),
+            Categoria = reader.IsDBNull(reader.GetOrdinal("Categoria")) ? string.Empty : reader.GetString(reader.GetOrdinal("Categoria")),
+            Valor = reader.GetDecimal(reader.GetOrdinal("Valor")),
+            DataMovimento = reader.GetDateTime(reader.GetOrdinal("DataMovimento")),
+            Status = (SituacaoStatus)reader.GetInt32(reader.GetOrdinal("Status"))
+        };
+    }
 }

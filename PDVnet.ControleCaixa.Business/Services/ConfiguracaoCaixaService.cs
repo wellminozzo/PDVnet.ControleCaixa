@@ -1,52 +1,58 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PDVnet.ControleCaixa.Data.Contexts;
-using PDVnet.ControleCaixa.Model.Caixa;
+﻿using Microsoft.Data.SqlClient;
+using PDVnet.ControleCaixa.Data;
 
 namespace PDVnet.ControleCaixa.Business.Services;
 
 public class ConfiguracaoCaixaService
 {
-    private readonly AppDbContext _context;
+    private readonly SqlConnectionFactory _connectionFactory;
 
-    public ConfiguracaoCaixaService(AppDbContext context)
+    public ConfiguracaoCaixaService(SqlConnectionFactory connectionFactory)
     {
-        _context = context;
+        _connectionFactory = connectionFactory;
     }
 
     public async Task<decimal> ObterSaldoInicialAsync()
     {
-        var config = await _context.ConfiguracoesCaixa.FirstOrDefaultAsync();
-        return config?.SaldoInicial ?? 0;
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand("SELECT TOP 1 SaldoInicial FROM ConfiguracoesCaixa", conexao);
+
+        await conexao.OpenAsync();
+        var result = await comando.ExecuteScalarAsync();
+        return result != null ? Convert.ToDecimal(result) : 0;
     }
 
     public async Task<decimal> ObterSaldoMinimoAsync()
     {
-        var config = await _context.ConfiguracoesCaixa.FirstOrDefaultAsync();
-        return config?.SaldoMinimo ?? 100m;
+        using var conexao = _connectionFactory.CriarConexao();
+        using var comando = new SqlCommand("SELECT TOP 1 SaldoMinimo FROM ConfiguracoesCaixa", conexao);
+
+        await conexao.OpenAsync();
+        var result = await comando.ExecuteScalarAsync();
+        return result != null ? Convert.ToDecimal(result) : 100m;
     }
 
     public async Task SalvarConfiguracaoAsync(decimal saldoInicial, decimal saldoMinimo)
     {
-        var config = await _context.ConfiguracoesCaixa.FirstOrDefaultAsync();
+        using var conexao = _connectionFactory.CriarConexao();
+        await conexao.OpenAsync();
 
-        if (config == null)
-        {
-            config = new ConfiguracaoCaixa
-            {
-                SaldoInicial = saldoInicial,
-                SaldoMinimo = saldoMinimo,
-                DataAtualizacao = DateTime.Now
-            };
-            _context.ConfiguracoesCaixa.Add(config);
-        }
-        else
-        {
-            config.SaldoInicial = saldoInicial;
-            config.SaldoMinimo = saldoMinimo;
-            config.DataAtualizacao = DateTime.Now;
-        }
+        using var verificaCmd = new SqlCommand("SELECT COUNT(1) FROM ConfiguracoesCaixa", conexao);
+        var existe = Convert.ToInt32(await verificaCmd.ExecuteScalarAsync()) > 0;
 
-        await _context.SaveChangesAsync();
+        using var cmd = existe
+            ? new SqlCommand(@"
+                UPDATE ConfiguracoesCaixa
+                SET SaldoInicial = @SaldoInicial, SaldoMinimo = @SaldoMinimo, DataAtualizacao = @Data
+                WHERE Id = (SELECT TOP 1 Id FROM ConfiguracoesCaixa)", conexao)
+            : new SqlCommand(@"
+                INSERT INTO ConfiguracoesCaixa (SaldoInicial, SaldoMinimo, DataAtualizacao)
+                VALUES (@SaldoInicial, @SaldoMinimo, @Data)", conexao);
+
+        cmd.Parameters.AddWithValue("@SaldoInicial", saldoInicial);
+        cmd.Parameters.AddWithValue("@SaldoMinimo", saldoMinimo);
+        cmd.Parameters.AddWithValue("@Data", DateTime.Now);
+
+        await cmd.ExecuteNonQueryAsync();
     }
 }
-

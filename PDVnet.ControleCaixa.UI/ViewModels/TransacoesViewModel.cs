@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
 using PDVnet.ControleCaixa.Business.Services;
 using PDVnet.ControleCaixa.Model.Caixa;
 using PDVnet.ControleCaixa.Model.Enums;
@@ -186,10 +186,9 @@ public class TransacoesViewModel : BaseViewModel
             LimparFormulario();
             await CarregarMovimentacoesAsync();
         }
-        catch (DbUpdateException dbEx)  // ✅ Captura específica do EF
+        catch (SqlException sqlEx)
         {
-            var innerMessage = dbEx.InnerException?.Message ?? dbEx.Message;
-            MessageBox.Show($"Erro no banco de dados:\n{innerMessage}", "Erro",
+            MessageBox.Show($"Erro no banco de dados:\n{sqlEx.Message}", "Erro",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (Exception ex)
